@@ -13,7 +13,7 @@ services:
           name: mongodb
           property: connectionString.standardSrv
       - key: PORT
-        value: 10000
+        value: 8000
       - key: HOST
         value: 0.0.0.0
       - key: NODE_OPTIONS
