@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: flipkart-backend
+    env: node
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        fromDatabase:
+          name: mongodb
+          property: connectionString.standardSrv
+      - key: PORT
+        value: 10000
+      - key: HOST
+        value: 0.0.0.0

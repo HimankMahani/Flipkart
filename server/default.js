@@ -16,16 +16,25 @@ const DefaultData = async () => {
             }
         }
 
-        // Check if we already have products to avoid duplicates
-        const count = await Product.countDocuments();
-        if (count === 0) {
-            console.log('No products found. Importing sample data...');
-            await Product.deleteMany({});
-            await Product.insertMany(products);
-            console.log('✅ Sample products imported successfully!');
-        } else {
-            console.log(`✅ Found ${count} existing products in the database.`);
+        // First, clear any existing products
+        await Product.deleteMany({});
+        
+        // Reset the auto-increment counter
+        const counter = await mongoose.connection.db.collection('counters').findOneAndUpdate(
+            { _id: 'product_id' },
+            { $set: { seq: 0 } },
+            { upsert: true, returnOriginal: false }
+        );
+        
+        // Insert products with auto-incrementing IDs
+        for (const product of products) {
+            // Remove the ID to let mongoose-sequence handle it
+            const { id, ...productData } = product;
+            const newProduct = new Product(productData);
+            await newProduct.save();
         }
+        
+        console.log(`✅ Successfully imported ${products.length} products.`);
         
         return true;
     } catch (error) {
