@@ -59,9 +59,22 @@ const ActionItem = ({ product }) => {
 
     return (
         <LeftContainer>
-            <Image src={product.detailUrl} /><br />
-            <StyledButton onClick={() => addItemToCart()} style={{marginRight: 10, background: '#ff9f00'}} variant="contained"><Cart />Add to Cart</StyledButton>
-            <StyledButton onClick={() => buyNow()} style={{background: '#fb641b'}} variant="contained"><Flash /> Buy Now</StyledButton>
+            <Image src={product.detailUrl} alt={product.title.shortTitle} /><br />
+            <Box mb={2}>
+                <label htmlFor="quantity">Quantity: </label>
+                <select 
+                    id="quantity" 
+                    value={quantity} 
+                    onChange={(e) => setQuantity(Number(e.target.value))}
+                    style={{ padding: '5px', marginLeft: '10px' }}
+                >
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                        <option key={num} value={num}>{num}</option>
+                    ))}
+                </select>
+            </Box>
+            <StyledButton onClick={addItemToCart} style={{marginRight: 10, background: '#ff9f00'}} variant="contained"><Cart />Add to Cart</StyledButton>
+            <StyledButton onClick={buyNow} style={{background: '#fb641b'}} variant="contained"><Flash /> Buy Now</StyledButton>
         </LeftContainer>
     )
 }

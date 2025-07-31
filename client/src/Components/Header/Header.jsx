@@ -86,7 +86,7 @@ const Header = () => {
                 </Drawer>
 
                 <Component to='/'>
-                    <img src={logoURL} style={{ width: 75 }} />
+                    <img src={logoURL} alt="Flipkart Logo" style={{ width: 75 }} />
                     <Box component="span" style={{ display: 'flex' }}>
                         <SubHeading>Explore&nbsp;
                             <Box component="span" style={{color:'#FFE500'}}>
