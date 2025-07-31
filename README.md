@@ -1,13 +1,149 @@
 # Flipkart Clone
 
-A full-stack e-commerce application built with MERN stack (MongoDB, Express.js, React.js, Node.js).
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Features
+A full-stack e-commerce application built with the MERN stack (MongoDB, Express.js, React.js, Node.js), replicating core functionalities of the popular Indian e-commerce platform Flipkart.
 
-- User authentication
-- Product listing and search
-- Shopping cart functionality
-- Order placement
+🔗 **Live Demo:** [Frontend](https://flipkart-zeta-dun.vercel.app/) | [Backend API](https://flipkart-backend-ozsq.onrender.com)
+
+## 🚀 Features
+
+### User Authentication
+- User registration and login
+- Secure password hashing
+- Session management
+
+### Product Management
+- Browse products by categories
+- Product search functionality
+- Product details and specifications
+- Product ratings and reviews
+
+### Shopping Experience
+- Add/remove items to/from cart
+- Adjust product quantities
+- Wishlist functionality
+- Apply discount coupons
+
+### Order Processing
+- Secure checkout process
+- Multiple payment options (including Paytm integration)
+- Order history and tracking
+- Order status updates
+
+### Admin Panel
+- Product management (CRUD operations)
+- Order management
+- User management
+- Sales analytics
+
+## 🛠 Tech Stack
+
+### Frontend
+- **React.js** - Frontend library
+- **Redux** - State management
+- **Material-UI** - UI components and theming
+- **React Router** - Navigation and routing
+- **Axios** - HTTP client
+- **React Multi Carousel** - Responsive carousel components
+
+### Backend
+- **Node.js** - JavaScript runtime
+- **Express.js** - Web application framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - MongoDB object modeling
+- **JWT** - Authentication
+- **Paytm Payment Gateway** - Payment processing
+
+### Deployment
+- **Vercel** - Frontend hosting
+- **Render** - Backend hosting
+- **MongoDB Atlas** - Cloud database
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v14 or later)
+- npm or yarn
+- MongoDB Atlas account or local MongoDB installation
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/flipkart-clone.git
+   cd flipkart
+   ```
+
+2. **Set up the backend**
+   ```bash
+   cd server
+   npm install
+   cp .env.example .env
+   # Update .env with your configuration
+   npm start
+   ```
+
+3. **Set up the frontend**
+   ```bash
+   cd ../client
+   npm install
+   cp .env.example .env
+   # Update .env with your API endpoint
+   npm start
+   ```
+
+4. **Environment Variables**
+
+   Create a `.env` file in both `client` and `server` directories with the following variables:
+
+   **Backend (.env)**
+   ```
+   PORT=5000
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   PAYTM_MERCHANT_KEY=your_paytm_merchant_key
+   PAYTM_MID=your_paytm_mid
+   PAYTM_WEBSITE=your_paytm_website
+   ```
+
+   **Frontend (.env)**
+   ```
+   REACT_APP_API_URL=http://localhost:5000
+   ```
+
+## 📦 Available Scripts
+
+### Frontend
+- `npm start` - Start development server
+- `npm run build` - Build for production
+- `npm test` - Run tests
+- `npm run eject` - Eject from create-react-app
+
+### Backend
+- `npm start` - Start production server
+- `npm run dev` - Start development server with nodemon
+
+## 🌐 Deployment
+
+The application is deployed using:
+- Frontend: [Vercel](https://vercel.com/)
+- Backend: [Render](https://render.com/)
+- Database: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Flipkart](https://www.flipkart.com/) for the design inspiration
+- [Material-UI](https://mui.com/) for the amazing UI components
+- All open-source libraries and tools used in this project
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 - Payment integration
 - Responsive design
 
