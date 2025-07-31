@@ -7,6 +7,7 @@ import { v4 as uuid } from 'uuid';
 import Connection from './database/db.js';
 import DefaultData from './default.js';
 import Routes from './routes/route.js';
+import healthRouter from './routes/health.js';
 
 
 dotenv.config();
@@ -18,6 +19,9 @@ const PORT = 8000;
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+
+// API Routes
+app.use('/api/health', healthRouter);
 app.use('/', Routes);
 
 // Connect to MongoDB and start server

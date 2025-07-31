@@ -59,21 +59,100 @@ A full-stack e-commerce application built with MERN stack (MongoDB, Express.js, 
 
 ## Deployment
 
-### Backend Deployment (Render)
+### Backend Deployment (DigitalOcean)
 
-1. Push your code to a GitHub repository
-2. Go to [Render Dashboard](https://dashboard.render.com/)
-3. Click "New" and select "Web Service"
-4. Connect your GitHub repository
-5. Configure the deployment:
-   - Name: your-app-name
-   - Region: Choose the closest to your users
-   - Branch: main (or your main branch)
-   - Build Command: `cd server && npm install`
-   - Start Command: `cd server && npm start`
-6. Add your environment variables:
-   - `MONGODB_URI`: Your MongoDB connection string
-7. Click "Create Web Service"
+1. **Create a DigitalOcean Droplet**:
+   - Go to [DigitalOcean](https://cloud.digitalocean.com/droplets)
+   - Click "Create" > "Droplets"
+   - Choose "Ubuntu" as the distribution
+   - Select a Basic plan (Starter: $6/month is sufficient for development)
+   - Choose a datacenter region closest to your users
+   - Set authentication (SSH key recommended)
+   - Click "Create Droplet"
+
+2. **Connect to your Droplet**:
+   ```bash
+   ssh root@your-droplet-ip
+   ```
+
+3. **Set up the server**:
+   ```bash
+   # Update packages
+   sudo apt update && sudo apt upgrade -y
+   
+   # Install Node.js and npm
+   curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+   sudo apt install -y nodejs
+   
+   # Install PM2 process manager
+   sudo npm install -g pm2
+   
+   # Install Nginx
+   sudo apt install -y nginx
+   
+   # Install MongoDB
+   sudo apt install -y mongodb
+   sudo systemctl enable mongodb
+   sudo systemctl start mongodb
+   ```
+
+4. **Deploy your code**:
+   ```bash
+   # Clone your repository
+   git clone https://github.com/your-username/flipkart-clone.git
+   cd flipkart-clone/server
+   
+   # Install dependencies
+   npm install
+   
+   # Set up environment variables
+   nano .env
+   # Add your MONGODB_URI and other environment variables
+   
+   # Start the server with PM2
+   pm2 start index.js --name "flipkart-backend"
+   
+   # Configure PM2 to start on boot
+   pm2 startup
+   pm2 save
+   ```
+
+5. **Set up Nginx as a reverse proxy**:
+   ```bash
+   sudo nano /etc/nginx/sites-available/flipkart
+   ```
+   
+   Add the following configuration (replace `your_domain` with your domain or IP):
+   ```
+   server {
+       listen 80;
+       server_name your_domain;
+
+       location / {
+           proxy_pass http://localhost:5000;
+           proxy_http_version 1.1;
+           proxy_set_header Upgrade $http_upgrade;
+           proxy_set_header Connection 'upgrade';
+           proxy_set_header Host $host;
+           proxy_cache_bypass $http_upgrade;
+       }
+   }
+   ```
+   
+   Enable the site and restart Nginx:
+   ```bash
+   sudo ln -s /etc/nginx/sites-available/flipkart /etc/nginx/sites-enabled/
+   sudo nginx -t
+   sudo systemctl restart nginx
+   ```
+
+6. **Set up a domain (optional)**:
+   - Point your domain's A record to your Droplet's IP address
+   - Set up SSL with Let's Encrypt:
+     ```bash
+     sudo apt install -y certbot python3-certbot-nginx
+     sudo certbot --nginx -d your_domain
+     ```
 
 ### Frontend Deployment (Netlify)
 
