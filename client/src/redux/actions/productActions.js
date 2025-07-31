@@ -4,23 +4,24 @@ import axios from 'axios';
 export const getProducts = () => async (dispatch) => {
     try {
         dispatch({ type: actionTypes.GET_PRODUCTS_REQUEST });
-        const { data } = await axios.get(`http://localhost:8000/products`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/products`);
         
-        if (data.success) {
+        if (response.data.success) {
             dispatch({ 
                 type: actionTypes.GET_PRODUCTS_SUCCESS, 
-                payload: data 
+                payload: response.data 
             });
         } else {
             dispatch({ 
                 type: actionTypes.GET_PRODUCTS_FAIL, 
-                payload: data.message || 'Failed to fetch products' 
+                payload: response.data.message || 'Failed to fetch products' 
             });
         }
     } catch (error) {
+        console.error('Error fetching products:', error);
         dispatch({ 
             type: actionTypes.GET_PRODUCTS_FAIL, 
-            payload: error.response?.data?.message || error.message 
+            payload: error.response?.data?.message || error.message || 'Network error. Please check your connection.'
         });
     }
 };
@@ -29,23 +30,24 @@ export const getProductDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: actionTypes.GET_PRODUCT_DETAILS_REQUEST });
         
-        const { data } = await axios.get(`http://localhost:8000/product/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/product/${id}`);
         
-        if (data.success) {
+        if (response.data.success) {
             dispatch({ 
                 type: actionTypes.GET_PRODUCT_DETAILS_SUCCESS, 
-                payload: data 
+                payload: response.data 
             });
         } else {
             dispatch({
                 type: actionTypes.GET_PRODUCT_DETAILS_FAIL,
-                payload: data.message || 'Failed to fetch product details'
+                payload: response.data.message || 'Failed to fetch product details'
             });
         }
     } catch (error) {
+        console.error('Error fetching product details:', error);
         dispatch({ 
             type: actionTypes.GET_PRODUCT_DETAILS_FAIL, 
-            payload: error.response?.data?.message || error.message 
+            payload: error.response?.data?.message || error.message || 'Failed to load product details. Please try again later.'
         });
     }
 };

@@ -1,6 +1,6 @@
 import * as actionTypes from '../constants/cartConstants';
 
-export const cartReducer = (state = { cartItems: []}, action) => {
+export const cartReducer = (state = { cartItems: [], error: null }, action) => {
     console.log('Cart Reducer - Action:', action.type, 'Payload:', action.payload);
     
     switch(action.type) {
@@ -19,14 +19,23 @@ export const cartReducer = (state = { cartItems: []}, action) => {
                 console.log('Adding new item to cart');
                 return  { ...state, cartItems: [...state.cartItems, item]}
             }
+        case actionTypes.ADD_TO_CART_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            };
         case actionTypes.REMOVE_FROM_CART:
             return {
-                ...state, cartItems: state.cartItems.filter(product => product.id !== action.payload)
+                ...state, 
+                cartItems: state.cartItems.filter(product => product.id !== action.payload),
+                error: null
             }
         case actionTypes.CART_RESET:
             console.log('Cart cleared successfully');
             return {
-                ...state, cartItems: []
+                ...state, 
+                cartItems: [],
+                error: null
             }
         default:
             return state;
